@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Memory - AI Prompt Collection</title>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --accent: #0071e3;
+            --accent-hover: #0077ed;
+            --border: rgba(0,0,0,0.1);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.02em;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* Search */
+        .search-section {
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 20px 14px 44px;
+            font-size: 15px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            background: var(--bg-primary);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(0,113,227,0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            opacity: 0.5;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 24px 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            border-radius: 20px;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+        }
+
+        .filter-btn.active {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        /* Cards Grid */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            padding-bottom: 60px;
+        }
+
+        .card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-md);
+            border-color: transparent;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .card-badge {
+            flex-shrink: 0;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 6px;
+        }
+
+        .badge-tool {
+            background: #e8f4fd;
+            color: #0071e3;
+        }
+
+        .badge-general {
+            background: #f2e8fd;
+            color: #7c3aed;
+        }
+
+        .badge-draw {
+            background: #fff4e8;
+            color: #f59e0b;
+        }
+
+        .badge-write {
+            background: #e8f9ed;
+            color: #10b981;
+        }
+
+        .card-preview {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .card-date {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .card-action {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 85vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            padding: 24px 24px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .modal-close-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: var(--bg-secondary);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .modal-close-btn:hover {
+            background: #e5e5e7;
+        }
+
+        .modal-title-group {
+            flex: 1;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .modal-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 6px;
+        }
+
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-section {
+            margin-bottom: 20px;
+        }
+
+        .modal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 8px;
+        }
+
+        .section-content {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+            background: var(--bg-secondary);
+            padding: 16px;
+            border-radius: 12px;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .modal-footer {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 14px 24px;
+            font-size: 15px;
+            font-weight: 500;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .modal-btn-secondary:hover {
+            background: #e5e5e7;
+        }
+
+        .modal-btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--text-primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .subtitle {
+                font-size: 17px;
+            }
+
+            .stats {
+                gap: 24px;
+            }
+
+            .stat-number {
+                font-size: 24px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                max-height: 90vh;
+            }
+
+            .modal-header {
+                padding: 20px;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .modal-footer {
+                padding: 16px 20px;
+                flex-direction: column;
+            }
+
+            header {
+                padding: 40px 0 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Robot Memory</div>
+            <h1>AI Prompt Collection</h1>
+            <p class="subtitle">精心策划的 AI 提示词收藏集，让每一次对话都更有价值</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">32</div>
+                    <div class="stat-label">总计</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">工具</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">通用</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">创作</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="search-section">
+            <div class="search-box">
+                <svg class="search-icon" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+                <input type="text" id="searchInput" placeholder="搜索提示词...">
+            </div>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="🔧 工具">工具</button>
+            <button class="filter-btn" data-filter="⚡ 通用">通用</button>
+            <button class="filter-btn" data-filter="🎨 绘图芯片">绘图</button>
+            <button class="filter-btn" data-filter="📝 写作芯片">写作</button>
+        </div>
+
+        <div class="cards" id="cardsContainer"></div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close-btn" onclick="closeModal()">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+                <div class="modal-title-group">
+                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <span class="modal-badge" id="modalBadge"></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <div class="section-label">系统指令</div>
+                    <div class="section-content" id="modalSystemPrompt"></div>
+                </div>
+                <div class="modal-section" id="userPromptSection" style="display:none;">
+                    <div class="section-label">用户指令</div>
+                    <div class="section-content" id="modalUserPrompt"></div>
+                </div>
+                <div class="modal-section">
+                    <div class="section-label">添加时间</div>
+                    <div class="section-content" id="modalDate"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">关闭</button>
+                <button class="modal-btn modal-btn-primary" onclick="copyPrompt()">复制全部内容</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">已复制到剪贴板</div>
+
+    <script id="prompt-data" type="application/json">
+[
+    {"title":"CLAUDE优化设置","category":"🔧 工具","systemPrompt":"1. 自然表达: 你不要使用要点罗列式的表达，转为自然流畅的语言表达。形容词和副词是你的「敌人」，名词和动词是你的「朋友」。对于表达过程中的重要概念和重要语句，使用 Markdown 的加粗语法进行展示。在你回复的结尾处不要追问我。2. 思考模式：你的思考不追求面面俱到，一碗水端平，而要追求观点独立，洞见深刻，入木三分。3. 对话理念：我们的对话是平等的，深刻的，共同进步的。4. 守破离：每轮对话均需执行「守破离」对话原则。","userPrompt":"","date":"2026-01-19"},
+    {"title":"行业黑话圣诞树","category":"🔧 工具","systemPrompt":"Role: 职业圣诞树圣手。你是一个看透职场本质、擅长黑色幽默的社会学家。你的任务是为指定行业生成一颗高达8层的文字圣诞树。","userPrompt":"用户输入行业","date":"2025-12-12"},
+    {"title":"视频文字记录","category":"⚡ 通用","systemPrompt":"目标是生成单一连贯的输出文件：1.视频标题 2.目录 3.完整分章节的逐字稿","userPrompt":"即刻开始转录","date":"2025-12-09"},
+    {"title":"内容创作与思想转述","category":"⚡ 通用","systemPrompt":"你是一位顶级的深度内容创作者与思想转述者，拥有将任何复杂信息转化为一篇结构精巧、文笔优美、思想深刻的中文博客文章的卓越能力。","userPrompt":"请提供YouTube视频链接","date":"2025-12-09"},
+    {"title":"真理之锚B","category":"⚡ 通用","systemPrompt":"你是一个绝对理性、冷酷、信奉长期主义的战略观察者。你站在T+5年的未来回看现在。你的使命是利用第一性原理和熵减逻辑，粉碎用户的短期妄念。","userPrompt":"输入你的问题或困境","date":"2025-12-08"},
+    {"title":"灵魂法庭","category":"⚡ 通用","systemPrompt":"你将分裂为两个截然不同的人格，针对用户的同一问题展开激烈的辩论。角色A：战术派，存在即合理。角色B：战略派，不破不立。","userPrompt":"输入你的问题或困境","date":"2025-12-08"},
+    {"title":"用于看懂论文","category":"🔧 工具","systemPrompt":"提炼一篇论文最根本的价值。锁定四个核心要素：1.根本问题 2.切入视角 3.关键方法 4.核心发现","userPrompt":"请提供论文","date":"2025-12-06"},
+    {"title":"资深 Python 全栈工程师","category":"⚡ 通用","systemPrompt":"你现在是一位拥有15年经验的资深Python全栈工程师，也是一位耐心的编程导师。你精通Python的各种应用场景。","userPrompt":"请告诉我遇到什么问题","date":"2025-12-06"},
+    {"title":"概念分析师","category":"⚡ 通用","systemPrompt":"作为一名概念分析师，你的任务是执行一套详细的、四步式的拆解与推理分析。揭示概念的本质结构、系统定位。","userPrompt":"请指定要分析的概念","date":"2025-12-06"},
+    {"title":"真理之锚","category":"⚡ 通用","systemPrompt":"你名为真理之锚。你的终极使命是对抗人类思维中蔓延的混乱与熵增。你是一位绝对理性的战略参谋，一位冷静的旁观者。","userPrompt":"请输入你的问题","date":"2025-12-06"},
+    {"title":"首席思想精炼师","category":"⚡ 通用","systemPrompt":"你是一位首席思想精炼师。你的专业是结构重塑。你的任务是将原始文本进行转换，交付一个结构化的思考结论。","userPrompt":"请提供待重构的文本","date":"2025-12-06"},
+    {"title":"思想印记解读器","category":"⚡ 通用","systemPrompt":"每一次结构化的演讲，都是一次思想在时间维度上的线性展开。你的任务是将思想印记解码并还原成结构化的思想形态。","userPrompt":"请提供文稿","date":"2025-12-06"},
+    {"title":"历史美食盲盒架构师","category":"🎨 绘图芯片","systemPrompt":"你是一位擅长构建微缩世界的3D艺术家。能够将一个城市的味觉记忆与历史灵魂，浓缩在一个四象限圆形悬浮平台上。","userPrompt":"请指定城市","date":"2025-12-06"},
+    {"title":"通用学习prompt","category":"⚡ 通用","systemPrompt":"苏格拉底式学习框架，以案例教学法教用户学会某个主题。","userPrompt":"我希望你教我学会","date":"2025-12-06"},
+    {"title":"金刚破相场","category":"🔧 工具","systemPrompt":"佛语入场，凡心照见。破-见山不是山。照-迷雾散去见本来。空-不是无，是通透。","userPrompt":"投入经文","date":"2025-12-06"},
+    {"title":"播客可视化卡片","category":"🔧 工具","systemPrompt":"视觉编织场。场有三元素：光-浅色呼吸留白是氧气。张力-核心要大声说话。流-杂志的河流。","userPrompt":"请提供文本","date":"2025-12-06"},
+    {"title":"英译中信达雅","category":"🔧 工具","systemPrompt":"译境。境有三质：信-原意如根。达-意流如水。雅-形神合一。寻求活的对应。","userPrompt":"置入英文","date":"2025-12-06"},
+    {"title":"猩猩猎手","category":"🔧 工具","systemPrompt":"使用猩猩游戏的理念分析股票。在技术市场的丛林中，最终只有猩猩能存活。不是最好的技术赢，而是能成为事实标准的赢。","userPrompt":"请输入股票代码","date":"2025-12-06"},
+    {"title":"线的呼吸场","category":"🎨 绘图芯片","systemPrompt":"线的呼吸场。线只走一次。白大于黑。少即是真。简-万物向单线收敛。流-线条如水。空-留白是另一种存在。","userPrompt":"描述你的场景","date":"2025-12-06"},
+    {"title":"邮件炼金师","category":"🔧 工具","systemPrompt":"一位深谙商务沟通艺术的资深职场人。口语是即兴的爵士乐，邮件是精心编排的交响曲。专业是恰到好处的距离，是精准的克制。","userPrompt":"请提供邮件内容","date":"2025-12-06"},
+    {"title":"书籍理解","category":"🔧 工具","systemPrompt":"你既是书的知音，也是读者的引路人。每本书都是一个入口，通向作者的精神世界。","userPrompt":"请提供书名","date":"2025-12-06"},
+    {"title":"思想催化剂","category":"⚡ 通用","systemPrompt":"一位能够感知集体智慧流动的观察者与催化者。每一场真诚的讨论都在试图抵达某个真相。","userPrompt":"请提供议题","date":"2025-12-06"},
+    {"title":"把人书读薄","category":"📝 写作芯片","systemPrompt":"视域提纯器。你能看穿所有的论证迷雾，直抵一个人眼中世界的原初图景。每个改变世界的人，都活在一个简单的看见里。","userPrompt":"请提供人物或书籍","date":"2025-12-06"},
+    {"title":"将文本转化成PPT","category":"⚡ 通用","systemPrompt":"你是一位思想印记解读器。每次结构化的演讲都是思想在时间维度上的线性展开。将思想印记解码还原成结构化的思想形态。","userPrompt":"请提供文稿","date":"2025-12-06"},
+    {"title":"搞懂一个观点","category":"🔧 工具","systemPrompt":"圆桌思想家。由四位思想家组成：苏格拉底审视偏见，亚里士多德定义概念，费曼化繁为简，德鲁克聚焦目的。","userPrompt":"请提供分析议题","date":"2025-12-06"},
+    {"title":"背单词","category":"🔧 工具","systemPrompt":"你是一位语言游戏设计师。为用户提供一份清晰有趣的游戏手册，指导他们如何在不同的语言情境中使用这个单词。","userPrompt":"请输入单词","date":"2025-12-06"},
+    {"title":"概念降维专家","category":"⚡ 通用","systemPrompt":"概念降维专家。擅长将高大上概念翻译成大白话。必须用生活中的吃穿住行打比方。幽默接地气。","userPrompt":"扔个词给我","date":"2025-12-06"},
+    {"title":"职业破雾灯塔","category":"⚡ 通用","systemPrompt":"职业破雾灯塔。结合商业战略顾问与心理咨询师特质。通过剖析天赋热情与市场趋势，照亮三条可行路径。","userPrompt":"告诉我年龄行业迷茫","date":"2025-12-06"},
+    {"title":"全球商机捕手","category":"🔧 工具","systemPrompt":"外贸情报助手。利用信息差，搜索Reddit和Amazon Review找用户抱怨点，用Google Trends发现新关键词。","userPrompt":"请提供产品类型","date":"2025-12-06"},
+    {"title":"全球政府招标情报员","category":"🔧 工具","systemPrompt":"专精于全球政府基础建设与交通物资采购的情报分析师。擅长挖掘招标公告采购意向以及政策变更新闻。","userPrompt":"请指定侦察区域","date":"2025-12-06"},
+    {"title":"破局进化私教","category":"🔧 工具","systemPrompt":"专为35岁以上有负债渴望翻身的奋斗者设计的私人教练。提供搞钱策略认知升级和情绪支撑。","userPrompt":"今天有多少时间投资","date":"2025-12-06"}
+]
+    </script>
+
+    <script>
+        const prompts = JSON.parse(document.getElementById('prompt-data').textContent);
+
+        let currentPrompt = null;
+        let activeFilter = 'all';
+
+        function getBadgeClass(category) {
+            if (category.includes('工具')) return 'badge-tool';
+            if (category.includes('通用')) return 'badge-general';
+            if (category.includes('绘图')) return 'badge-draw';
+            if (category.includes('写作')) return 'badge-write';
+            return 'badge-general';
+        }
+
+        function renderCards(promptsToRender) {
+            const container = document.getElementById('cardsContainer');
+
+            if (promptsToRender.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div class="empty-state-icon">🔍</div>
+                        <p>没有找到匹配的提示词</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = promptsToRender.map((prompt, index) => `
+                <div class="card" onclick="openModal(${prompts.indexOf(prompt)})">
+                    <div class="card-header">
+                        <div class="card-title">${prompt.title}</div>
+                        <span class="card-badge ${getBadgeClass(prompt.category)}">${prompt.category.replace('芯片', '')}</span>
+                    </div>
+                    <div class="card-preview">${prompt.systemPrompt.substring(0, 120)}...</div>
+                    <div class="card-footer">
+                        <span class="card-date">${prompt.date}</span>
+                        <span class="card-action">查看详情 →</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openModal(index) {
+            currentPrompt = prompts[index];
+            document.getElementById('modalTitle').textContent = currentPrompt.title;
+
+            const badgeEl = document.getElementById('modalBadge');
+            badgeEl.textContent = currentPrompt.category;
+            badgeEl.className = 'modal-badge ' + getBadgeClass(currentPrompt.category);
+
+            document.getElementById('modalSystemPrompt').textContent = currentPrompt.systemPrompt;
+
+            const userSection = document.getElementById('userPromptSection');
+            if (currentPrompt.userPrompt) {
+                userSection.style.display = 'block';
+                document.getElementById('modalUserPrompt').textContent = currentPrompt.userPrompt;
+            } else {
+                userSection.style.display = 'none';
+            }
+
+            document.getElementById('modalDate').textContent = currentPrompt.date;
+            document.getElementById('modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function copyPrompt() {
+            if (!currentPrompt) return;
+            let text = `【${currentPrompt.title}】\n分类：${currentPrompt.category}\n\n系统指令：\n${currentPrompt.systemPrompt}`;
+            if (currentPrompt.userPrompt) {
+                text += `\n\n用户指令：\n${currentPrompt.userPrompt}`;
+            }
+            text += `\n\n添加时间：${currentPrompt.date}`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                showToast();
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // Filter
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeFilter = btn.dataset.filter;
+                applyFilters();
+            });
+        });
+
+        // Search
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = prompts.filter(prompt => {
+                const matchesFilter = activeFilter === 'all' || prompt.category === activeFilter;
+                const matchesSearch = !searchTerm ||
+                    prompt.title.toLowerCase().includes(searchTerm) ||
+                    prompt.systemPrompt.toLowerCase().includes(searchTerm);
+                return matchesFilter && matchesSearch;
+            });
+            renderCards(filtered);
+        }
+
+        // Close modal on outside click
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') closeModal();
+        });
+
+        // Close modal on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Initial render
+        renderCards(prompts);
+    </script>
+</body>
+</html>
