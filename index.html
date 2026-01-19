@@ -11,17 +11,10 @@
             --text-primary: #1d1d1f;
             --text-secondary: #86868b;
             --accent: #0071e3;
-            --accent-hover: #0077ed;
             --border: rgba(0,0,0,0.1);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.5; -webkit-font-smoothing: antialiased; }
         .container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
         header { padding: 60px 0 40px; text-align: center; }
         .logo { font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; }
@@ -31,29 +24,15 @@
         .stat-number { font-size: 28px; font-weight: 700; }
         .stat-label { font-size: 13px; color: var(--text-secondary); }
         .search-section { padding: 32px 0; border-bottom: 1px solid var(--border); }
-        .search-box { max-width: 500px; margin: 0 auto; position: relative; }
-        .search-box input {
-            width: 100%; padding: 14px 20px 14px 44px; font-size: 15px;
-            border: 1px solid var(--border); border-radius: 12px;
-            background: var(--bg-secondary);
-        }
-        .search-box input:focus {
-            outline: none; background: var(--bg-primary);
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(0,113,227,0.15);
-        }
+        .search-box { max-width: 500px; margin: 0 auto; }
+        .search-box input { width: 100%; padding: 14px 20px; font-size: 15px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-secondary); }
+        .search-box input:focus { outline: none; background: var(--bg-primary); border-color: var(--accent); }
         .filters { display: flex; justify-content: center; gap: 8px; padding: 24px 0; flex-wrap: wrap; }
-        .filter-btn {
-            padding: 8px 16px; font-size: 14px; border: none; border-radius: 20px;
-            background: transparent; color: var(--text-secondary); cursor: pointer;
-        }
+        .filter-btn { padding: 8px 16px; font-size: 14px; border: none; border-radius: 20px; background: transparent; color: var(--text-secondary); cursor: pointer; }
         .filter-btn:hover { background: var(--bg-secondary); }
         .filter-btn.active { background: var(--text-primary); color: var(--bg-primary); }
         .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; padding-bottom: 60px; }
-        .card {
-            background: var(--bg-primary); border: 1px solid var(--border);
-            border-radius: 16px; padding: 20px; cursor: pointer; transition: all 0.3s;
-        }
+        .card { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 16px; padding: 20px; cursor: pointer; transition: all 0.3s; }
         .card:hover { transform: scale(1.02); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
         .card-header { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
         .card-title { font-size: 16px; font-weight: 600; }
@@ -66,43 +45,22 @@
         .card-footer { display: flex; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border); }
         .card-date { font-size: 13px; color: var(--text-secondary); }
         .card-action { font-size: 13px; font-weight: 500; color: var(--accent); }
-        .modal {
-            display: none; position: fixed; inset: 0;
-            background: rgba(0,0,0,0.4); backdrop-filter: blur(20px);
-            z-index: 1000; align-items: center; justify-content: center; padding: 20px;
-        }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(20px); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
         .modal.active { display: flex; }
-        .modal-content {
-            background: var(--bg-primary); border-radius: 20px; max-width: 700px; width: 100%;
-            max-height: 85vh; overflow: hidden; display: flex; flex-direction: column;
-        }
+        .modal-content { background: var(--bg-primary); border-radius: 20px; max-width: 700px; width: 100%; max-height: 85vh; overflow: hidden; display: flex; flex-direction: column; }
         .modal-header { padding: 24px; border-bottom: 1px solid var(--border); display: flex; gap: 16px; }
-        .modal-close-btn {
-            width: 32px; height: 32px; border: none; border-radius: 50%;
-            background: var(--bg-secondary); cursor: pointer;
-        }
+        .modal-close-btn { width: 32px; height: 32px; border: none; border-radius: 50%; background: var(--bg-secondary); cursor: pointer; }
         .modal-title { font-size: 22px; font-weight: 700; }
         .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
         .section-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; }
-        .section-content {
-            font-size: 15px; line-height: 1.7; white-space: pre-wrap;
-            background: var(--bg-secondary); padding: 16px; border-radius: 12px;
-            max-height: 280px; overflow-y: auto;
-        }
+        .section-content { font-size: 15px; line-height: 1.7; white-space: pre-wrap; background: var(--bg-secondary); padding: 16px; border-radius: 12px; max-height: 280px; overflow-y: auto; }
         .modal-footer { padding: 20px 24px; border-top: 1px solid var(--border); display: flex; gap: 12px; }
         .modal-btn { flex: 1; padding: 14px; border: none; border-radius: 12px; cursor: pointer; }
         .modal-btn-secondary { background: var(--bg-secondary); }
         .modal-btn-primary { background: var(--accent); color: white; }
-        .toast {
-            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
-            background: var(--text-primary); color: white; padding: 12px 24px;
-            border-radius: 10px; opacity: 0; transition: all 0.3s; z-index: 2000;
-        }
+        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text-primary); color: white; padding: 12px 24px; border-radius: 10px; opacity: 0; transition: all 0.3s; z-index: 2000; }
         .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        @media (max-width: 768px) {
-            h1 { font-size: 32px; }
-            .cards { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 768px) { h1 { font-size: 32px; } .cards { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -130,7 +88,7 @@
             <button class="filter-btn" data-filter="🎨 绘图芯片">绘图</button>
             <button class="filter-btn" data-filter="📝 写作芯片">写作</button>
         </div>
-        <div class="cards" id="cardsContainer"><div class="loading">加载中...</div></div>
+        <div class="cards" id="cardsContainer"><div style="text-align:center;padding:40px;">加载中...</div></div>
     </div>
     <div class="modal" id="modal">
         <div class="modal-content">
@@ -158,14 +116,131 @@
     </div>
     <div class="toast" id="toast">已复制到剪贴板</div>
     <script>
-        let prompts=[],currentPrompt=null,activeFilter='all';
-        async function loadPrompts(){try{const e=await fetch("prompts.json");prompts=await e.json(),renderCards(prompts)}catch{document.getElementById("cardsContainer").innerHTML='<div style="text-align:center;padding:40px;">加载失败</div>'}}
-        function getBadgeClass(e){return e.includes("工具")?"badge-tool":e.includes("通用")?"badge-general":e.includes("绘图")?"badge-draw":"badge-write"}
-        function renderCards(e){const t=document.getElementById("cardsContainer");if(0===e.length){t.innerHTML='<div style="text-align:center;padding:40px;">没有找到匹配的提示词</div>';return}t.innerHTML=e.map(e=>`<div class="card" onclick="openModal(${prompts.indexOf(e)})"><div class="card-header"><div class="card-title">${e.title}</div><span class="card-badge ${getBadgeClass(e.category)}">${e.category.replace("芯片","")}</span></div><div class="card-preview">${e.systemPrompt.substring(0,120)}...</div><div class="card-footer"><span class="card-date">${e.date}</span><span class="card-action">查看详情 →</span></div></div>`).join("")}
-        function openModal(e){currentPrompt=e;document.getElementById("modalTitle").textContent=e.title;document.getElementById("modalSystemPrompt").textContent=e.systemPrompt;const t=document.getElementById("userPromptSection");e.userPrompt?(t.style.display="block",document.getElementById("modalUserPrompt").textContent=e.userPrompt):t.style.display="none";document.getElementById("modalDate").textContent=e.date,document.getElementById("modal").classList.add("active"),document.body.style.overflow="hidden"}
-        function closeModal(){document.getElementById("modal").classList.remove("active"),document.body.style.overflow=""}
-        function copyPrompt(){if(!currentPrompt)return;let e=`【${currentPrompt.title}】\n分类：${currentPrompt.category}\n\n系统指令：\n${currentPrompt.systemPrompt}`;currentPrompt.userPrompt&&(e+=`\n\n用户指令：\n${currentPrompt.userPrompt}`),e+=`\n\n添加时间：${currentPrompt.date}`,navigator.clipboard.writeText(e).then(()=>showToast())}
-        function showToast(){const e=document.getElementById("toast");e.classList.add("show"),setTimeout(()=>e.classList.remove("show"),2000)}document.querySelectorAll(".filter-btn").forEach(e=>{e.addEventListener("click",()=>{document.querySelectorAll(".filter-btn").forEach(e=>e.classList.remove("active")),e.classList.add("active"),activeFilter=e.dataset.filter,applyFilters()})}),document.getElementById("searchInput").addEventListener("input",applyFilters);function applyFilters(){const e=document.getElementById("searchInput").value.toLowerCase();prompts.filter(t=>{const n="all"===activeFilter||t.category===activeFilter;return n&&(!e||t.title.toLowerCase().includes(e)||t.systemPrompt.toLowerCase().includes(e))}).forEach(e=>{renderCards(prompts.filter(t=>{const n="all"===activeFilter||t.category===activeFilter;return n&&(!e||t.title.toLowerCase().includes(e)||t.systemPrompt.toLowerCase().includes(e))}))})}document.getElementById("modal").addEventListener("click",e=>{"modal"===e.target.id&&closeModal()}),document.addEventListener("keydown",e=>{"Escape"===e.key&&closeModal()}),loadPrompts();
+        let prompts = [];
+        let currentPrompt = null;
+        let activeFilter = 'all';
+
+        async function loadPrompts() {
+            try {
+                const response = await fetch('prompts.json?v=' + Date.now());
+                prompts = await response.json();
+                renderCards(prompts);
+            } catch (error) {
+                console.error('Load error:', error);
+                document.getElementById('cardsContainer').innerHTML = '<div style="text-align:center;padding:40px;">加载失败，请刷新页面重试<br><small>或检查控制台错误信息</small></div>';
+            }
+        }
+
+        function getBadgeClass(category) {
+            if (category.includes('工具')) return 'badge-tool';
+            if (category.includes('通用')) return 'badge-general';
+            if (category.includes('绘图')) return 'badge-draw';
+            if (category.includes('写作')) return 'badge-write';
+            return 'badge-general';
+        }
+
+        function renderCards(promptsToRender) {
+            const container = document.getElementById('cardsContainer');
+            if (promptsToRender.length === 0) {
+                container.innerHTML = '<div style="text-align:center;padding:40px;">没有找到匹配的提示词</div>';
+                return;
+            }
+            container.innerHTML = promptsToRender.map((prompt, index) => `
+                <div class="card" data-index="${index}">
+                    <div class="card-header">
+                        <div class="card-title">${prompt.title}</div>
+                        <span class="card-badge ${getBadgeClass(prompt.category)}">${prompt.category.replace('芯片', '')}</span>
+                    </div>
+                    <div class="card-preview">${prompt.systemPrompt.substring(0, 120)}...</div>
+                    <div class="card-footer">
+                        <span class="card-date">${prompt.date}</span>
+                        <span class="card-action">查看详情 →</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // 为每个卡片添加点击事件
+            container.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    openModal(prompts[index]);
+                });
+            });
+        }
+
+        function openModal(prompt) {
+            currentPrompt = prompt;
+            document.getElementById('modalTitle').textContent = prompt.title;
+            document.getElementById('modalSystemPrompt').textContent = prompt.systemPrompt;
+            const userSection = document.getElementById('userPromptSection');
+            if (prompt.userPrompt) {
+                userSection.style.display = 'block';
+                document.getElementById('modalUserPrompt').textContent = prompt.userPrompt;
+            } else {
+                userSection.style.display = 'none';
+            }
+            document.getElementById('modalDate').textContent = prompt.date;
+            document.getElementById('modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function copyPrompt() {
+            if (!currentPrompt) return;
+            let text = '【' + currentPrompt.title + '】\n分类：' + currentPrompt.category + '\n\n系统指令：\n' + currentPrompt.systemPrompt;
+            if (currentPrompt.userPrompt) {
+                text += '\n\n用户指令：\n' + currentPrompt.userPrompt;
+            }
+            text += '\n\n添加时间：' + currentPrompt.date;
+            navigator.clipboard.writeText(text).then(() => showToast());
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // 筛选
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeFilter = btn.dataset.filter;
+                applyFilters();
+            });
+        });
+
+        // 搜索
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = prompts.filter(prompt => {
+                const matchesFilter = activeFilter === 'all' || prompt.category === activeFilter;
+                const matchesSearch = !searchTerm ||
+                    prompt.title.toLowerCase().includes(searchTerm) ||
+                    prompt.systemPrompt.toLowerCase().includes(searchTerm);
+                return matchesFilter && matchesSearch;
+            });
+            renderCards(filtered);
+        }
+
+        // 关闭弹窗
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // 加载数据
+        loadPrompts();
     </script>
 </body>
 </html>
