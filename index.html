@@ -155,6 +155,19 @@
             margin-bottom: 60px;
         }
 
+        .header-image {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 32px;
+            display: block;
+        }
+
+        .header-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+        }
+
         .header-title {
             font-size: 14px;
             text-transform: uppercase;
@@ -481,7 +494,7 @@
             </div>
 
             <div class="sidebar-section">
-                <div class="sidebar-label">Categories</div>
+                <div class="sidebar-label">分类</div>
                 <ul class="category-list" id="categoryList"></ul>
             </div>
 
@@ -496,6 +509,9 @@
         <main class="main-content">
             <div class="content-wrapper">
                 <header class="header">
+                    <div class="header-image">
+                        <img src="https://maas-log-prod.cn-wlcb.ufileos.com/anthropic/d2d28efb-5cfe-40a9-b59a-c101be65f430/D:\Personal\Documents\xwechat_files\suiyi477685_feff\temp\RWTemp\2026-01\a37f13f8ff670764fe37f2831201d7e9\d21c13e2e476af1f1f9e285ea9be15de.png?UCloudPublicKey=TOKEN_e15ba47a-d098-4fbd-9afc-a0dcf0e4e621&Expires=1768812545&Signature=cJkafFBEbr9XcaEbe51tePe1dCU=" alt="思维芯片">
+                    </div>
                     <div class="header-title">提示词库</div>
                     <h1 class="header-heading">思维 · 芯片</h1>
                     <p class="header-subtitle">精心策划的 AI 提示词集合，释放协作的无限潜能。</p>
@@ -563,7 +579,7 @@ function renderCategories() {
     const html = categories.map(cat => {
         const isActive = cat === activeCategory;
         const count = cat === 'all' ? total : counts[cat];
-        const name = cat === 'all' ? 'All Prompts' : cat;
+        const name = cat === 'all' ? '全部提示词' : cat;
         return `<li class="category-item ${isActive ? 'active' : ''}" data-category="${cat}">
             <span>${name}</span>
             <span class="category-count">${count}</span>
